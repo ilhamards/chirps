@@ -12,7 +12,7 @@ I made this project with my friends who are new to fullstack web development and
 
 - Copy `.env.example` file and rename it to `.env.local`
 
-> NOTE: Update environment based on your need (check docker-compose or use your local environment)
+> NOTE: Update environment based on your need (check docker-compose or use your local tools)
 
 - For development run `pnpm run dev` from root project
 

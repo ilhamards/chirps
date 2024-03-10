@@ -18,7 +18,7 @@ ARG PROJECT
 
 WORKDIR /app
 COPY . .
-RUN turbo prune --scope=${PROJECT} --docker
+RUN turbo prune --filter=api --docker
 
 # Build the project
 FROM base AS builder
@@ -37,10 +37,9 @@ RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfi
 # Copy source code of isolated subworkspace
 COPY --from=pruner /app/out/full/ .
 
-RUN turbo build --filter=${PROJECT}
+RUN turbo build --filter=api
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 RUN rm -rf ./**/*/src
-
 
 # Final image
 FROM alpine AS runner
@@ -52,11 +51,7 @@ USER nodejs
 
 WORKDIR /app
 
-COPY --from=builder --chown=nodejs:nodejs /app/apps/${PROJECT}/next.config.js .
 COPY --from=builder --chown=nodejs:nodejs /app/apps/${PROJECT}/package.json .
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nodejs:nodejs /app/apps/${PROJECT}/dist ./
 
 WORKDIR /app/apps/${PROJECT}
