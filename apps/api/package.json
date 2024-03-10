@@ -1,0 +1,26 @@
+{
+	"name": "@chirps/api",
+	"private": true,
+	"scripts": {
+		"lint": "tsc --noEmit",
+		"dev": "pnpm with-env && tsx watch src/index.ts",
+		"build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js --external:express --external:cors",
+		"start": "node dist/index.js",
+		"with-env": "dotenv -e ../../.env.local --"
+	},
+	"devDependencies": {
+		"@chirps/eslint-config": "workspace:*",
+		"@chirps/typescript-config": "workspace:*",
+		"@types/node": "^20",
+		"dotenv-cli": "^7.4.1",
+		"esbuild": "^0.15.11",
+		"tsx": "^3.10.1",
+		"typescript": "^5.4.2"
+	},
+	"eslintConfig": {
+		"root": true,
+		"extends": [
+			"@chirps/eslint-config/library"
+		]
+	}
+}
