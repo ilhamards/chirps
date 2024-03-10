@@ -18,7 +18,7 @@ ARG PROJECT
 
 WORKDIR /app
 COPY . .
-RUN turbo prune --filter=api --docker
+RUN turbo prune ${PROJECT} --docker
 
 # Build the project
 FROM base AS builder
@@ -37,7 +37,7 @@ RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfi
 # Copy source code of isolated subworkspace
 COPY --from=pruner /app/out/full/ .
 
-RUN turbo build --filter=api
+RUN turbo build --filter=${PROJECT}
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 RUN rm -rf ./**/*/src
 

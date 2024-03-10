@@ -51,6 +51,7 @@ services:
 volumes:
   chirps_mysql_data:
 
+
 networks:
   chirps_network:
     driver: bridge

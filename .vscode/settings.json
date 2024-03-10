@@ -20,5 +20,22 @@
 		"next/router.d.ts",
 		"next/dist/client/router.d.ts"
 	],
-	"typescript.tsdk": "node_modules/typescript/lib"
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"[dockercompose]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+		"editor.autoIndent": "advanced",
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": false,
+			"strings": true
+		},
+		"editor.defaultFormatter": "ms-azuretools.vscode-docker"
+	},
+	"[dockerfile]": {
+		"editor.quickSuggestions": {
+			"strings": true
+		},
+		"editor.defaultFormatter": "ms-azuretools.vscode-docker"
+	}
 }

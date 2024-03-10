@@ -1,5 +1,5 @@
 {
-	"name": "@chirps/api",
+	"name": "api",
 	"private": true,
 	"scripts": {
 		"lint": "tsc --noEmit",
@@ -14,6 +14,8 @@
 		"@types/node": "^20",
 		"dotenv-cli": "^7.4.1",
 		"esbuild": "^0.15.11",
+		"eslint": "^8.57.0",
+		"prettier": "^3.2.5",
 		"tsx": "^3.10.1",
 		"typescript": "^5.4.2"
 	},

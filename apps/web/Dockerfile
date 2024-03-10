@@ -18,7 +18,7 @@ ARG PROJECT
 
 WORKDIR /app
 COPY . .
-RUN turbo prune --filter=web --docker
+RUN turbo prune ${PROJECT} --docker
 
 # Build the project
 FROM base AS builder
@@ -37,7 +37,9 @@ RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfi
 # Copy source code of isolated subworkspace
 COPY --from=pruner /app/out/full/ .
 
-RUN turbo build --filter=web
+ENV IS_STANDALONE=1
+
+RUN turbo build --filter=${PROJECT}
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 RUN rm -rf ./**/*/src
 
@@ -51,7 +53,7 @@ USER nodejs
 
 WORKDIR /app
 
-COPY --from=builder --chown=nodejs:nodejs /app/apps/${PROJECT}/next.config.js .
+COPY --from=builder --chown=nodejs:nodejs /app/apps/${PROJECT}/next.config.mjs .
 COPY --from=builder --chown=nodejs:nodejs /app/apps/${PROJECT}/package.json .
 
 # Automatically leverage output traces to reduce image size
